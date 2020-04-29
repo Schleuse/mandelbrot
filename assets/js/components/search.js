@@ -27,14 +27,16 @@ class Search {
             const $li = $(item);
             const collectionLabel = $li.parents('.Tree-collection').find('> .Tree-collectionLabel').text();
             const itemLabel = $li.text();
+            const itemHandle = $li.data('handle');
             const childrenWithTags = $li.find('[data-tags]');
             const tagAttributes = childrenWithTags.length > 0 ? childrenWithTags.attr('data-tags') : '';
 
             const collectionLabelMatches = collectionLabel.toUpperCase().indexOf(key) !== -1;
             const itemLabelMatches = itemLabel.toUpperCase().indexOf(key) !== -1;
             const tagAttributesMatch = tagAttributes.toUpperCase().indexOf(key) !== -1;
+            const handleMatches = itemHandle.toUpperCase().indexOf(key) !== -1;
 
-            if (collectionLabelMatches || itemLabelMatches || tagAttributesMatch) {
+            if (collectionLabelMatches || itemLabelMatches || tagAttributesMatch || handleMatches) {
                 if (key.length) {
                     $li.parents('.Tree-collection').each((_index, parent) => {
                         const collection = collections.find((c) => c._el[0] === parent);

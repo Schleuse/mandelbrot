@@ -12,7 +12,7 @@
 {% macro leaves(items, root, current, depth, request) %}
     {% for item in items %}
         {% if item.isCollection or (item.isComponent and not item.isCollated and item.variants().filter('isHidden', false).size > 1) %}
-        <li class="Tree-item Tree-collection Tree-depth-{{ depth }}" data-behaviour="collection" id="tree-{{ root.name }}-collection-{{ item.handle }}">
+        <li class="Tree-item Tree-collection Tree-depth-{{ depth }}" data-behaviour="collection" id="tree-{{ root.name }}-collection-{{ item.handle }}" data-handle="@{item.handle}">
             <h4 class="Tree-collectionLabel" data-role="toggle">
                 <span>{{ item.label }}</span>
             </h4>
@@ -27,7 +27,7 @@
         </li>
         {% else %}
         {% set isCurrent = true if (current and (current.id == item.id)) else false %}
-        <li class="Tree-item Tree-entity{% if isCurrent %} is-current{% endif %}"{% if isCurrent %} data-state="current"{% endif %} data-role="item">
+        <li class="Tree-item Tree-entity{% if isCurrent %} is-current{% endif %}"{% if isCurrent %} data-state="current"{% endif %} data-role="item" data-handle="@{item.handle}">
             <a class="Tree-entityLink" href="{{ path( (item | url), request) }}"{% if item.tags and item.tags.length > 1 %} data-tags="{{ item.tags | dump | replace("null,", "") | escape  }}"{% endif %} data-pjax>
                 <span>{{ item.label }}</span>
                 {% if item.status %}{{ status.unlabelled(item.status) }}{% endif %}
